@@ -18,7 +18,10 @@ const {
   PORT
 } = process.env;
 
-const requiredRoleIds = (REQUIRED_ROLE_IDS || "").split(",").map(x => x.trim()).filter(Boolean);
+const requiredRoleIds = (REQUIRED_ROLE_IDS || "")
+  .split(",")
+  .map(x => x.trim())
+  .filter(Boolean);
 
 app.get("/", (req, res) => {
   res.send("duck-backend is running");
@@ -73,7 +76,10 @@ async function fetchGuildMember(tokenType, accessToken) {
 async function getWhitelist() {
   const url = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${WHITELIST_FILE}`;
   const resp = await fetch(url, {
-    headers: { Authorization: `Bearer ${GITHUB_TOKEN}`, "Accept": "application/vnd.github+json" }
+    headers: {
+      Authorization: `Bearer ${GITHUB_TOKEN}`,
+      Accept: "application/vnd.github+json"
+    }
   });
   if (resp.status === 404) return { entries: [], sha: null };
   if (!resp.ok) throw new Error("Failed fetching whitelist");
@@ -101,7 +107,7 @@ async function saveWhitelist(entries, sha, actor) {
     method: "PUT",
     headers: {
       Authorization: `Bearer ${GITHUB_TOKEN}`,
-      "Accept": "application/vnd.github+json"
+      Accept: "application/vnd.github+json"
     },
     body: JSON.stringify(body)
   });
@@ -131,7 +137,8 @@ app.get("/auth/discord/callback", async (req, res) => {
     }
 
     const roles = Array.isArray(member.roles) ? member.roles : [];
-    const hasRequired = requiredRoleIds.length === 0 || roles.some(r => requiredRoleIds.includes(r));
+    const hasRequired =
+      requiredRoleIds.length === 0 || roles.some(r => requiredRoleIds.includes(r));
 
     if (!hasRequired) {
       res.status(403).send("You do not have the required roles.");
@@ -164,7 +171,9 @@ app.get("/auth/discord/callback", async (req, res) => {
     }
 
     const redirectUrl = VERIFY_URL || "https://example.com";
-    res.send(`Success! Added ${robloxName} to whitelist. You can now run the script. You may close this page.`);
+    res.send(
+      `Success! Added ${robloxName} to whitelist. You can now run the script. You may close this page.`
+    );
   } catch (err) {
     console.error(err);
     res.status(500).send("Internal error during Discord auth.");
