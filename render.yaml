@@ -1,0 +1,32 @@
+services:
+  - type: web
+    name: duck-backend
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: DISCORD_CLIENT_ID
+        sync: false
+      - key: DISCORD_CLIENT_SECRET
+        sync: false
+      - key: DISCORD_REDIRECT_URI
+        sync: false
+      - key: DISCORD_GUILD_ID
+        value: 1086994640735060019
+      - key: DISCORD_BOT_TOKEN
+        sync: false
+      - key: GITHUB_TOKEN
+        sync: false
+      - key: GITHUB_OWNER
+        sync: false
+      - key: GITHUB_REPO
+        value: duck-whitelist
+      - key: WHITELIST_FILE
+        value: whitelist.json
+      - key: REQUIRED_ROLE_IDS
+        value: 1441920765279604786,1136026447706865857,1304254137910825031,1304254137910825032
+      - key: VERIFY_URL
+        sync: false
+      - key: PORT
+        value: 3000
