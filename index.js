@@ -172,7 +172,7 @@ app.get("/auth/discord/callback", async (req, res) => {
 
     const redirectUrl = VERIFY_URL || "https://example.com";
     res.send(
-      `Success! Added ${robloxName} to whitelist. You can now run the script. You may close this page.`
+      `Success! Added ${robloxName} to whitelist. You can now run the script. You may close this page. NOTE: IF IT DOESNT VERIFY, WAIT AT LEAST 5 MINUTES!`
     );
   } catch (err) {
     console.error(err);
@@ -201,3 +201,4 @@ const port = Number(PORT) || 3000;
 app.listen(port, () => {
   console.log("duck-backend listening on port", port);
 });
+
